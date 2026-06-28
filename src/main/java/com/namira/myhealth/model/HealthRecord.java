@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class HealthRecord {
@@ -13,17 +15,26 @@ public class HealthRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Pattern(regexp = "^$|^[0-9]+(\\.[0-9]+)?$",
+            message = "Weight must be a number (e.g. 65 or 65.5).")
     private String weight;
+
+    @Pattern(regexp = "^$|^[0-9]+(\\.[0-9]+)?$",
+            message = "Temperature must be a number (e.g. 36 or 36.8).")
     private String temperature;
+
+    @Pattern(regexp = "^$|^[0-9]+/[0-9]+$",
+            message = "Blood pressure must be in format 120/80.")
     private String bloodPressure;
+
+    @Size(max = 249, message = "Note must be less than 250 characters.")
     private String note;
+
     private String date;
 
-    // empty constructor - JPA needs this
     public HealthRecord() {
     }
 
-    // getters and setters
     public Long getId() {
         return id;
     }
